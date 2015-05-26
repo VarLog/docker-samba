@@ -13,7 +13,9 @@ RUN smbpasswd -a -n guest
 RUN smbpasswd -e -n guest
 RUN smbpasswd -a -n jenkins
 RUN smbpasswd -e -n jenkins
-RUN echo -ne "jenkins\njenkins\n" |smbpasswd -s jenkins
+
+RUN echo "\n\n" |smbpasswd -s guest
+RUN echo "jenkins\njenkins\n" |smbpasswd -s jenkins
 
 ADD smb.conf /tmp/share.smb.conf
 ADD init.sh /tmp/init.sh
