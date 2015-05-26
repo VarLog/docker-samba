@@ -8,10 +8,14 @@ RUN apt-get install -y samba
 RUN apt-get clean -y && apt-get autoclean -y
 
 RUN useradd -g nogroup -d /share -r guest
+RUN useradd -g nogroup -d /share -r jenkins
 RUN smbpasswd -a -n guest
 RUN smbpasswd -e -n guest
+RUN smbpasswd -a -n jenkins
+RUN smbpasswd -e -n jenkins
+RUN echo -ne "jenkins\njenkins\n" |smbpasswd -s jenkins
 
-ADD share.smb.conf /tmp/share.smb.conf
+ADD smb.conf /tmp/share.smb.conf
 ADD init.sh /tmp/init.sh
 
 CMD ["/tmp/init.sh"]
